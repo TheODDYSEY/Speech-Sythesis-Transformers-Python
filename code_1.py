@@ -46,3 +46,6 @@ def save_text_to_speech(text, speaker=None):
     sf.write(output_filename, speech.cpu().numpy(), samplerate=16000)
     # return the filename for reference
     return output_filename
+
+# generate speech with a US female voice
+save_text_to_speech("Python is my favorite programming language", speaker=speakers["slt"])
