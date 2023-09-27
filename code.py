@@ -23,4 +23,25 @@ speakers = {
     'ksp': 4535,  # Indian male
     'rms': 5667,  # US male
     'slt': 6799   # US female
-}
+}def save_text_to_speech(text, speaker=None):
+    # preprocess text
+    inputs = processor(text=text, return_tensors="pt").to(device)
+    if speaker is not None:
+        # load xvector containing speaker's voice characteristics from a dataset
+        speaker_embeddings = torch.tensor(embeddings_dataset[speaker]["xvector"]).unsqueeze(0).to(device)
+    else:
+        # random vector, meaning a random voice
+        speaker_embeddings = torch.randn((1, 512)).to(device)
+    # generate speech with the models
+    speech = model.generate_speech(inputs["input_ids"], speaker_embeddings, vocoder=vocoder)
+    if speaker is not None:
+        # if we have a speaker, we use the speaker's ID in the filename
+        output_filename = f"{speaker}-{'-'.join(text.split()[:6])}.mp3"
+    else:
+        # if we don't have a speaker, we use a random string in the filename
+        random_str = ''.join(random.sample(string.ascii_letters+string.digits, k=5))
+        output_filename = f"{random_str}-{'-'.join(text.split()[:6])}.mp3"
+    # save the generated speech to a file with 16KHz sampling rate
+    sf.write(output_filename, speech.cpu().numpy(), samplerate=16000)
+    # return the filename for reference
+    return output_filename
