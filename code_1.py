@@ -23,7 +23,8 @@ speakers = {
     'ksp': 4535,  # Indian male
     'rms': 5667,  # US male
     'slt': 6799   # US female
-}def save_text_to_speech(text, speaker=None):
+}
+def save_text_to_speech(text, speaker=None):
     # preprocess text
     inputs = processor(text=text, return_tensors="pt").to(device)
     if speaker is not None:
