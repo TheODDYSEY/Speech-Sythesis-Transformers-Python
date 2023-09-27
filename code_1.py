@@ -49,3 +49,5 @@ def save_text_to_speech(text, speaker=None):
 
 # generate speech with a US female voice
 save_text_to_speech("Python is my favorite programming language", speaker=speakers["slt"])
+# generate speech with a random voice
+save_text_to_speech("Python is my favorite programming language")
