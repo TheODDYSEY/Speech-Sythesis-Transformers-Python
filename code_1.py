@@ -51,3 +51,14 @@ def save_text_to_speech(text, speaker=None):
 save_text_to_speech("Python is my favorite programming language", speaker=speakers["slt"])
 # generate speech with a random voice
 save_text_to_speech("Python is my favorite programming language")
+# a challenging text with all speakers
+text = """In his miracle year, he published four groundbreaking papers. 
+These outlined the theory of the photoelectric effect, explained Brownian motion, 
+introduced special relativity, and demonstrated mass-energy equivalence."""
+
+for speaker_name, speaker in speakers.items():
+    output_filename = save_text_to_speech(text, speaker)
+    print(f"Saved {output_filename}")
+# random speaker
+output_filename = save_text_to_speech(text)
+print(f"Saved {output_filename}")
